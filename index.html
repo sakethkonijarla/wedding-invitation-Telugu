@@ -1,0 +1,1449 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover">
+  <title>Saketh &amp; Yamini — Sacred Wedding Invitation</title>
+  <meta name="description" content="A scroll-controlled cinematic temple wedding journey celebrating the union of Jaganadha Saketh Guptha & Sai Likitha Yamini.">
+  <meta name="theme-color" content="#1a1510">
+
+  <!-- Google Fonts: Royal Serif, Telugu Calligraphy & Modern Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Mandali&family=Montserrat:wght@300;400;500;600&family=Peddana&family=Ramabhadra&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --gold-primary: #f2d283;
+      --gold-light: #fff5db;
+      --gold-dark: #c89a2b;
+      --gold-gradient: linear-gradient(135deg, #fff7e0 0%, #edd38c 45%, #c89a2b 100%);
+      --crimson-accent: #b3262e;
+      --glass-bg: rgba(20, 16, 12, 0.44); /* Translucent so background temple is clearly visible */
+      --glass-border: rgba(255, 235, 185, 0.38);
+      --glass-glow: 0 10px 35px 0 rgba(0, 0, 0, 0.38);
+      --font-royal: 'Cinzel Decorative', 'Cinzel', serif;
+      --font-serif: 'Cormorant Garamond', Georgia, serif;
+      --font-telugu: 'Peddana', 'Mandali', 'Ramabhadra', serif;
+      --font-sans: 'Montserrat', -apple-system, BlinkMacSystemFont, sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    html, body {
+      background-color: #120e0a;
+      color: #faf6ed;
+      font-family: var(--font-sans);
+      overflow-x: hidden;
+      scroll-behavior: auto;
+    }
+
+    /* Fixed Background Viewport Container */
+    #stage-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      height: 100dvh;
+      z-index: 1;
+      overflow: hidden;
+      background: #14100c;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* Video Player - Brightened & Crisp so stone carvings are highlighted */
+    #temple-video {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center center;
+      will-change: transform;
+      filter: brightness(1.08) contrast(1.04) saturate(1.06);
+      transition: filter 0.4s ease;
+    }
+
+    /* Light, Atmospheric Vignette (Crystal clear top so temple gopuram is unblurred & bright) */
+    .vignette-overlay {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background: radial-gradient(circle at center, transparent 48%, rgba(20, 16, 12, 0.16) 82%, rgba(14, 10, 7, 0.38) 100%),
+                  linear-gradient(to bottom, transparent 0%, transparent 75%, rgba(12, 9, 6, 0.42) 100%);
+      z-index: 2;
+    }
+
+    /* Gentle Floating Golden Dust Particles */
+    #particles-canvas {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      z-index: 3;
+    }
+
+    /* Top Navigation Header - 100% Transparent, No Blur across the temple */
+    header.experience-header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      padding: 16px 22px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: transparent;
+      backdrop-filter: none;
+      -webkit-backdrop-filter: none;
+      pointer-events: none;
+      transition: transform 0.4s ease;
+    }
+    header.experience-header > * {
+      pointer-events: auto;
+    }
+
+    .brand-mark {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .brand-logo {
+      width: 32px;
+      height: 32px;
+      fill: var(--gold-primary);
+      filter: drop-shadow(0 0 10px rgba(242, 210, 131, 0.6));
+    }
+
+    .brand-title {
+      font-family: var(--font-royal);
+      font-size: 0.95rem;
+      letter-spacing: 2px;
+      color: var(--gold-light);
+      text-transform: uppercase;
+      text-shadow: 0 2px 10px rgba(0,0,0,0.9);
+    }
+
+    .top-controls {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .control-btn {
+      background: rgba(30, 24, 18, 0.72);
+      border: 1px solid var(--glass-border);
+      color: var(--gold-light);
+      padding: 8px 16px;
+      border-radius: 30px;
+      font-size: 0.8rem;
+      font-weight: 500;
+      letter-spacing: 1px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      box-shadow: 0 4px 14px rgba(0,0,0,0.4);
+    }
+
+    .control-btn:hover {
+      background: rgba(242, 210, 131, 0.3);
+      border-color: var(--gold-primary);
+      transform: translateY(-1px);
+      box-shadow: 0 4px 18px rgba(242, 210, 131, 0.4);
+    }
+
+    .control-btn svg {
+      width: 14px;
+      height: 14px;
+      fill: currentColor;
+    }
+
+    /* Timeline Indicator (Bottom Left) */
+    .timeline-indicator {
+      position: fixed;
+      left: 20px;
+      bottom: 24px;
+      z-index: 90;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 0.72rem;
+      letter-spacing: 1.5px;
+      color: rgba(255, 246, 230, 0.85);
+      background: rgba(20, 16, 12, 0.65);
+      padding: 6px 14px;
+      border-radius: 20px;
+      border: 1px solid rgba(255, 235, 185, 0.3);
+      backdrop-filter: blur(8px);
+      box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+    }
+    .progress-track {
+      width: 70px;
+      height: 3px;
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 3px;
+      overflow: hidden;
+      position: relative;
+    }
+    .progress-fill {
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 100%;
+      width: 0%;
+      background: var(--gold-gradient);
+      box-shadow: 0 0 10px var(--gold-primary);
+      transition: width 0.1s linear;
+    }
+
+    /* Scroll Height Mock Container */
+    #scroll-track {
+      position: relative;
+      width: 100%;
+      height: 700vh;
+      z-index: 10;
+      pointer-events: none;
+    }
+
+    /* Story Sections - Perfectly Centered in Viewport */
+    .story-section {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      height: 100dvh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: clamp(54px, 8vh, 66px) clamp(12px, 3vw, 22px) clamp(44px, 6.5vh, 54px) clamp(12px, 3vw, 22px);
+      box-sizing: border-box;
+      opacity: 0;
+      transform: translateY(16px) scale(0.98);
+      visibility: hidden;
+      transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1),
+                  transform 0.6s cubic-bezier(0.16, 1, 0.3, 1),
+                  visibility 0.6s;
+      pointer-events: none;
+      z-index: 20;
+    }
+
+    .story-section.active {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+      visibility: visible;
+      pointer-events: auto;
+    }
+
+    /* Lighter, Translucent Center Box - 100% Unblurred, Perfectly Fitted to Viewport Without Internal Scroll */
+    .glass-card {
+      background: rgba(18, 14, 10, 0.72);
+      border: 1px solid rgba(255, 235, 185, 0.45);
+      border-radius: 20px;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6), 0 0 35px rgba(242, 210, 131, 0.18);
+      backdrop-filter: none !important;
+      -webkit-backdrop-filter: none !important;
+      padding: clamp(12px, 2.2vh, 22px) clamp(14px, 2.5vw, 24px);
+      max-width: 580px;
+      width: 100%;
+      margin: auto;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      max-height: 90vh;
+      max-height: 90dvh;
+    }
+
+    /* Golden Arch Filigree Accents */
+    .glass-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 15%;
+      right: 15%;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--gold-primary), transparent);
+    }
+    .glass-card::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 15%;
+      right: 15%;
+      height: 1.5px;
+      background: linear-gradient(90deg, transparent, var(--gold-dark), transparent);
+    }
+
+    /* Telugu Typography & Headings */
+    .telugu-font {
+      font-family: var(--font-telugu);
+      letter-spacing: 0.5px;
+    }
+
+    .telugu-shloka {
+      font-family: var(--font-telugu);
+      font-size: clamp(1.15rem, 3.4vw, 1.45rem);
+      color: var(--gold-primary);
+      margin-bottom: 4px;
+      line-height: 1.35;
+      font-weight: 600;
+      text-shadow: 0 0 16px rgba(242, 210, 131, 0.6), 0 2px 6px rgba(0,0,0,0.8);
+    }
+
+    .section-eyebrow {
+      font-size: 0.72rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: #fff6e0;
+      margin-bottom: 6px;
+      font-weight: 600;
+      text-shadow: 0 1px 4px rgba(0,0,0,0.8);
+    }
+
+    .telugu-sub {
+      font-family: var(--font-telugu);
+      font-size: 0.98rem;
+      letter-spacing: 0.4px;
+      text-transform: none;
+      color: var(--gold-light);
+      line-height: 1.35;
+    }
+
+    .main-title {
+      font-family: var(--font-royal);
+      font-size: clamp(1.4rem, 4.2vw, 2rem);
+      line-height: 1.22;
+      font-weight: 700;
+      background: var(--gold-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 6px;
+      filter: drop-shadow(0 2px 8px rgba(0,0,0,0.7));
+    }
+
+    .subtitle-prose {
+      font-family: var(--font-serif);
+      font-size: clamp(0.92rem, 2.4vw, 1.15rem);
+      line-height: 1.45;
+      color: #faf5ea;
+      margin-bottom: 10px;
+      text-shadow: 0 2px 8px rgba(0,0,0,0.8);
+    }
+
+    .ornament-divider {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      margin: 8px 0;
+    }
+    .ornament-divider span {
+      display: block;
+      height: 1px;
+      width: 45px;
+      background: linear-gradient(90deg, transparent, rgba(242, 210, 131, 0.7));
+    }
+    .ornament-divider span:last-child {
+      background: linear-gradient(90deg, rgba(242, 210, 131, 0.7), transparent);
+    }
+    .ornament-icon {
+      font-size: 1rem;
+      color: var(--gold-primary);
+      filter: drop-shadow(0 0 8px var(--gold-primary));
+    }
+
+    /* Scroll Prompt */
+    .hero-prompt {
+      margin-top: 10px;
+      display: inline-flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+    }
+    .scroll-mouse-icon {
+      width: 20px;
+      height: 32px;
+      border: 2px solid var(--gold-primary);
+      border-radius: 12px;
+      position: relative;
+      box-shadow: 0 0 10px rgba(242, 210, 131, 0.4);
+    }
+    .scroll-mouse-icon::before {
+      content: '';
+      position: absolute;
+      top: 5px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 3px;
+      height: 6px;
+      background: var(--gold-light);
+      border-radius: 2px;
+      animation: mouse-scroll 1.6s infinite ease-in-out;
+    }
+    @keyframes mouse-scroll {
+      0% { transform: translate(-50%, 0); opacity: 1; }
+      100% { transform: translate(-50%, 12px); opacity: 0; }
+    }
+    .scroll-prompt-text {
+      font-size: 0.8rem;
+      color: var(--gold-light);
+      text-shadow: 0 0 8px rgba(0,0,0,0.9);
+      animation: pulse-glow 2s infinite;
+    }
+    @keyframes pulse-glow {
+      0%, 100% { opacity: 0.8; }
+      50% { opacity: 1; text-shadow: 0 0 12px rgba(242, 210, 131, 0.9); }
+    }
+
+    /* Couple Names */
+    .couple-names-wrap {
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+      margin: 6px 0;
+    }
+    .couple-name {
+      font-family: var(--font-royal);
+      font-size: clamp(1.2rem, 3.6vw, 1.65rem);
+      letter-spacing: 1.2px;
+      color: #ffffff;
+      text-shadow: 0 2px 14px rgba(0,0,0,0.9);
+      line-height: 1.2;
+    }
+    .couple-name span {
+      background: var(--gold-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .couple-ampersand {
+      font-family: var(--font-serif);
+      font-size: 1.4rem;
+      font-style: italic;
+      color: var(--gold-primary);
+      line-height: 1;
+      margin: 1px 0;
+      text-shadow: 0 0 10px rgba(242, 210, 131, 0.6);
+    }
+    .parent-line {
+      font-size: 0.84rem;
+      color: #fff9ea;
+      line-height: 1.35;
+      margin-top: 2px;
+      text-shadow: 0 1px 4px rgba(0,0,0,0.8);
+    }
+
+    /* Invited by Box */
+    .invited-by-box {
+      margin-top: 8px;
+      padding: 8px 14px;
+      background: rgba(30, 24, 18, 0.6);
+      border: 1px solid rgba(255, 235, 185, 0.4);
+      border-radius: 12px;
+      box-shadow: 0 4px 18px rgba(0,0,0,0.3);
+    }
+
+    /* Events Grid - Perfectly Framed 3 Milestone Timeline */
+    .events-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 6px;
+      text-align: left;
+      margin-top: 8px;
+      width: 100%;
+    }
+    @media (min-width: 620px) {
+      .glass-card.celebrations-card {
+        max-width: 680px;
+        padding: clamp(14px, 2.2vh, 20px) 20px;
+      }
+      .events-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 8px;
+      }
+    }
+    .event-item {
+      background: rgba(30, 24, 18, 0.74);
+      border: 1px solid rgba(255, 235, 185, 0.32);
+      border-radius: 10px;
+      padding: 8px 10px;
+      backdrop-filter: none !important;
+      -webkit-backdrop-filter: none !important;
+      transition: all 0.25s ease;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .event-item:hover {
+      border-color: var(--gold-primary);
+      background: rgba(42, 34, 24, 0.88);
+      transform: translateY(-2px);
+    }
+    .event-tag {
+      font-size: 0.65rem;
+      letter-spacing: 1.1px;
+      text-transform: uppercase;
+      color: var(--gold-primary);
+      font-weight: 600;
+      margin-bottom: 2px;
+    }
+    .event-title {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: #ffffff;
+      margin-bottom: 2px;
+      line-height: 1.2;
+    }
+    .event-time {
+      font-size: 0.72rem;
+      color: rgba(255, 248, 235, 0.88);
+      line-height: 1.3;
+    }
+
+    /* Muhurtham & Live Countdown */
+    .muhurtham-badge {
+      display: inline-block;
+      border: 1px solid var(--gold-primary);
+      padding: 4px 14px;
+      border-radius: 30px;
+      font-size: 0.74rem;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--gold-light);
+      background: rgba(242, 210, 131, 0.2);
+      margin-bottom: 6px;
+      box-shadow: 0 0 15px rgba(242, 210, 131, 0.25);
+    }
+    .date-highlight {
+      font-size: clamp(1.25rem, 3.6vw, 1.75rem);
+      color: #ffffff;
+      font-weight: 700;
+      margin-bottom: 3px;
+      text-shadow: 0 2px 10px rgba(0,0,0,0.8);
+    }
+    .countdown-grid {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      margin: 10px 0 4px 0;
+    }
+    .countdown-cell {
+      background: rgba(28, 22, 16, 0.7);
+      border: 1px solid rgba(255, 235, 185, 0.35);
+      border-radius: 10px;
+      padding: 6px 10px;
+      min-width: 52px;
+      text-align: center;
+      box-shadow: 0 4px 14px rgba(0,0,0,0.3);
+    }
+    .countdown-val {
+      font-family: var(--font-royal);
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--gold-primary);
+      line-height: 1;
+    }
+    .countdown-lbl {
+      font-size: 0.6rem;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, 0.7);
+      margin-top: 3px;
+    }
+
+    /* Venue & Action Buttons */
+    .venue-title {
+      font-family: var(--font-royal);
+      font-size: clamp(1.3rem, 3.8vw, 1.75rem);
+      font-weight: 700;
+      color: #ffffff;
+      margin-bottom: 2px;
+      text-shadow: 0 2px 10px rgba(0,0,0,0.8);
+    }
+    .venue-address {
+      font-size: 0.88rem;
+      color: #fff6e5;
+      line-height: 1.35;
+      margin-bottom: 8px;
+    }
+    .action-buttons-wrap {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 8px;
+      margin-top: 8px;
+    }
+    .cta-button {
+      padding: 9px 16px;
+      border-radius: 30px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .cta-primary {
+      background: var(--gold-gradient);
+      color: #120e0a;
+      border: none;
+      box-shadow: 0 4px 20px rgba(242, 210, 131, 0.45);
+    }
+    .cta-primary:hover {
+      transform: translateY(-2px) scale(1.02);
+      box-shadow: 0 6px 26px rgba(242, 210, 131, 0.65);
+    }
+    .cta-secondary {
+      background: rgba(30, 24, 18, 0.75);
+      border: 1px solid var(--glass-border);
+      color: var(--gold-light);
+      backdrop-filter: none;
+      -webkit-backdrop-filter: none;
+    }
+    .cta-secondary:hover {
+      background: rgba(242, 210, 131, 0.25);
+      border-color: var(--gold-primary);
+      transform: translateY(-2px);
+    }
+    .cta-button svg {
+      width: 16px;
+      height: 16px;
+      fill: currentColor;
+    }
+
+    /* Quick Navigation Dots (Bottom Right) */
+    .quick-nav {
+      position: fixed;
+      right: 20px;
+      bottom: 24px;
+      z-index: 90;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .nav-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.3);
+      border: 1px solid var(--glass-border);
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    .nav-dot.active {
+      background: var(--gold-primary);
+      transform: scale(1.35);
+      box-shadow: 0 0 10px var(--gold-primary);
+    }
+
+    /* Toast Notification */
+    #toast-msg {
+      position: fixed;
+      bottom: 30px;
+      left: 50%;
+      transform: translateX(-50%) translateY(80px);
+      background: var(--gold-gradient);
+      color: #120e0a;
+      font-weight: 600;
+      font-size: 0.85rem;
+      padding: 12px 24px;
+      border-radius: 30px;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.6);
+      z-index: 300;
+      opacity: 0;
+      pointer-events: none;
+      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    #toast-msg.show {
+      transform: translateX(-50%) translateY(0);
+      opacity: 1;
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 600px) {
+      .glass-card {
+        padding: clamp(10px, 1.8vh, 15px) 14px;
+        border-radius: 16px;
+        max-height: 92vh;
+        max-height: 92dvh;
+        overflow: hidden;
+      }
+      .story-section {
+        padding: 50px 10px 42px 10px;
+      }
+      .brand-title {
+        font-size: 0.8rem;
+        letter-spacing: 1px;
+      }
+      .timeline-indicator {
+        left: 10px;
+        bottom: 10px;
+        padding: 4px 10px;
+      }
+      .quick-nav {
+        right: 10px;
+        bottom: 10px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Background Video Viewport Stage -->
+  <div id="stage-container">
+    <video
+      id="temple-video"
+      playsinline
+      webkit-playsinline
+      muted
+      preload="auto"
+      poster="poster_first.jpg"
+    >
+      <source src="temple_scrub_opt.mp4" type="video/mp4">
+      <source src="temple_scrub_h264.mp4" type="video/mp4">
+      <source src="temple_original.mp4" type="video/mp4">
+      Your browser does not support HTML5 video.
+    </video>
+    <div class="vignette-overlay"></div>
+    <canvas id="particles-canvas"></canvas>
+  </div>
+
+  <!-- Persistent Header with Sound & Autoplay Controls -->
+  <header class="experience-header">
+    <div class="brand-mark">
+      <svg class="brand-logo" viewBox="0 0 100 100">
+        <!-- Sacred Stylized Lotus -->
+        <path d="M50 15 C45 35 30 45 10 50 C30 55 45 65 50 85 C55 65 70 55 90 50 C70 45 55 35 50 15 Z" />
+        <circle cx="50" cy="50" r="8" fill="var(--gold-light)" />
+      </svg>
+      <div class="brand-title">Saketh &amp; Yamini</div>
+    </div>
+
+    <div class="top-controls">
+      <!-- Auto Playback Walkthrough Toggle -->
+      <button id="autoplay-btn" class="control-btn" title="Auto Walkthrough">
+        <svg viewBox="0 0 24 24" id="autoplay-icon"><path d="M8 5v14l11-7z"/></svg>
+        <span id="autoplay-text">Auto Tour</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Progress timeline indicator -->
+  <div class="timeline-indicator">
+    <div class="progress-track">
+      <div id="progress-bar" class="progress-fill"></div>
+    </div>
+    <span id="time-display">00:00 / 00:39</span>
+  </div>
+
+  <!-- Quick Navigation Dots -->
+  <nav class="quick-nav" aria-label="Section navigation">
+    <div class="nav-dot active" data-step="0" title="The Sanctum Opening"></div>
+    <div class="nav-dot" data-step="1" title="The Couple"></div>
+    <div class="nav-dot" data-step="2" title="Ceremonies &amp; Rituals"></div>
+    <div class="nav-dot" data-step="3" title="Auspicious Muhurtham"></div>
+    <div class="nav-dot" data-step="4" title="Venue &amp; Invitation"></div>
+  </nav>
+
+  <!-- Dummy Scroll Track to Drive Timeline -->
+  <div id="scroll-track"></div>
+
+  <!-- Story Sections -->
+
+  <!-- SCENE 1: (0% - 16% scroll) Opening Temple Gopuram & Sacred Telugu Invocation -->
+  <section class="story-section active" id="scene-0">
+    <div class="glass-card">
+      <div class="telugu-shloka">॥ శ్రీరస్తు శుభమస్తు అవిఘ్నమస్తు ॥</div>
+      <div class="section-eyebrow telugu-sub">శ్రీ లక్ష్మీ వేంకటేశ్వర స్వామి వారి దివ్య కృపాకటాక్ష వీక్షణలతో</div>
+      <h1 class="main-title">రెండు మనసులు.<br>ఒక పవిత్ర బంధం.</h1>
+
+      <div class="ornament-divider">
+        <span></span>
+        <div class="ornament-icon">✦</div>
+        <span></span>
+      </div>
+
+      <p class="subtitle-prose telugu-font">
+        "పెద్దల ఆశీస్సులతో, దైవ సంకల్పంతో.. ఏడడుగుల బంధంతో నూరేళ్ళ పవిత్ర ప్రయాణం."
+      </p>
+
+      <div class="hero-prompt">
+        <div class="scroll-mouse-icon"></div>
+        <span class="scroll-prompt-text telugu-font">ఆహ్వాన దర్శనం కొరకు క్రిందికి స్క్రోల్ చేయండి</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- SCENE 2: (18% - 38% scroll) Temple Architecture -> First Reveal: The Couple -->
+  <section class="story-section" id="scene-1">
+    <div class="glass-card">
+      <div class="telugu-shloka">॥ శుభ వివాహ ఆహ్వాన పత్రిక ॥</div>
+      <div class="section-eyebrow telugu-sub">పెద్దల దీవెనలతో • బంధుమిత్రుల సమక్షంలో</div>
+
+      <div class="couple-names-wrap">
+        <div class="couple-name"><span>JAGANADHA SAKETH GUPTHA</span></div>
+        <div class="parent-line telugu-font">
+          S/o శ్రీ కొణిజర్ల రామకృష్ణ - కవిత దంపతులు<br>
+          <span style="font-size: 0.8rem; opacity: 0.88;">(S/O KONIJARLA RAMAKRISHNA - KAVITHA)</span>
+        </div>
+
+        <div class="couple-ampersand">&amp;</div>
+
+        <div class="couple-name"><span>SAI LIKITHA YAMINI</span></div>
+        <div class="parent-line telugu-font">
+          D/o శ్రీ పసుమర్తి వెంకట రామకృష్ణారావు - మహాలక్ష్మి దంపతులు<br>
+          <span style="font-size: 0.8rem; opacity: 0.88;">(D/O Pasumarthi Venkata Ramakrishna Rao - Mahalakshmi)</span>
+        </div>
+      </div>
+
+      <div class="ornament-divider">
+        <span></span>
+        <div class="ornament-icon">❖</div>
+        <span></span>
+      </div>
+
+      <div class="invited-by-box">
+        <div style="font-size: 0.72rem; letter-spacing: 2px; text-transform: uppercase; color: var(--gold-light);">ఆహ్వానించువారు • CORDIALLY INVITED BY</div>
+        <div style="font-family: var(--font-royal); font-size: 1.12rem; color: #ffffff; margin-top: 4px; font-weight: 700; letter-spacing: 1px;">KONIJARLA RAMAKRISHNA - KAVITHA</div>
+        <div style="font-size: 0.88rem; color: var(--gold-primary); font-family: var(--font-telugu); margin-top: 2px;">కొణిజర్ల రామకృష్ణ - కవిత మరియు కుటుంబ సభ్యులు</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SCENE 3: (40% - 64% scroll) Inner Corridors & Mandapa -> Celebrations & Dinner -->
+  <section class="story-section" id="scene-2">
+    <div class="glass-card celebrations-card">
+      <div class="section-eyebrow telugu-sub" style="margin-bottom: 4px;">శుభకార్య వేడుకలు • Order of Celebrations</div>
+      <h2 class="main-title" style="font-size: clamp(1.35rem, 3.8vw, 1.85rem); margin-bottom: 4px;">మంగళకరమైన వేడుకలు</h2>
+      <p style="font-size: 0.85rem; color: #fff8e8; margin-bottom: 10px;" class="telugu-font">బంధుమిత్రులందరూ విచ్చేసి నూతన వధూవరులను ఆశీర్వదించగలరు</p>
+
+      <div class="events-grid">
+        <div class="event-item">
+          <div>
+            <div class="event-tag">Nov 18 • Wednesday</div>
+            <div class="event-title telugu-font">పెళ్ళికొడుకు &amp; హల్దీ</div>
+          </div>
+          <div class="event-time">Pellikoduku, Haldi<br>సాంప్రదాయ మంగళస్నానం &amp; పసుపు వేడుక</div>
+        </div>
+
+        <div class="event-item" style="border-color: #ffd700; background: rgba(42, 32, 20, 0.88); box-shadow: 0 0 18px rgba(242, 210, 131, 0.25);">
+          <div>
+            <div class="event-tag" style="color: #ffe699;">Nov 20 • Friday • Wedding Day</div>
+            <div class="event-title telugu-font" style="color: #ffffff;">శుభ వివాహం &amp; విందు</div>
+          </div>
+          <div class="event-time">Dinner: 07:30 PM<br>సుముహూర్తం: 08:56 PM (మిథున లగ్నం)</div>
+        </div>
+
+        <div class="event-item">
+          <div>
+            <div class="event-tag">Nov 21 • Saturday</div>
+            <div class="event-title telugu-font">సత్యనారాయణ స్వామి వ్రతం</div>
+          </div>
+          <div class="event-time">Satya Narayana Swami Vratham<br>నూతన దంపతుల దివ్య పూజ</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SCENE 4: (66% - 84% scroll) Temple Corridor -> Muhurtham & Live Countdown -->
+  <section class="story-section" id="scene-3">
+    <div class="glass-card">
+      <div class="muhurtham-badge telugu-font">దివ్య సుముహూర్తం • AUSPICIOUS MUHURTHAM</div>
+      <div class="date-highlight telugu-font">శుక్రవారం, 20 నవంబర్ 2026</div>
+      <div style="font-size: 1.05rem; color: #ffffff; font-weight: 600; letter-spacing: 0.5px; margin-bottom: 3px;">
+        రాత్రి 8:56 గంటలకు (At 8:56 PM)
+      </div>
+      <div style="font-size: 1.02rem; color: var(--gold-primary); font-family: var(--font-telugu); font-weight: 600; margin-bottom: 2px; text-shadow: 0 0 10px rgba(242, 210, 131, 0.5);">
+        "ఉత్తరాభాద్ర నక్షత్రయుక్త మిథున లగ్న సుముహూర్తమున"
+      </div>
+      <div style="font-size: 0.78rem; color: var(--gold-light); letter-spacing: 1px; text-transform: uppercase;">
+        (Uttharabadra Nakshatram - Midhuna Lagnam)
+      </div>
+
+      <div class="ornament-divider">
+        <span></span>
+        <div class="ornament-icon">✧</div>
+        <span></span>
+      </div>
+
+      <p class="subtitle-prose telugu-font" style="font-size: 1.05rem; line-height: 1.45; margin-bottom: 6px; color: #fffdf5;">
+        "మాంగల్యం తంతునానేన మమ జీవన హేతునా..<br>కంఠే బధ్నామి శుభగే త్వం జీవ శరదాం శతం॥"
+      </p>
+
+      <div class="countdown-grid">
+        <div class="countdown-cell">
+          <div class="countdown-val" id="cd-days">00</div>
+          <div class="countdown-lbl">Days</div>
+        </div>
+        <div class="countdown-cell">
+          <div class="countdown-val" id="cd-hours">00</div>
+          <div class="countdown-lbl">Hours</div>
+        </div>
+        <div class="countdown-cell">
+          <div class="countdown-val" id="cd-minutes">00</div>
+          <div class="countdown-lbl">Mins</div>
+        </div>
+        <div class="countdown-cell">
+          <div class="countdown-val" id="cd-seconds">00</div>
+          <div class="countdown-lbl">Secs</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SCENE 5: (86% - 100% scroll) Final Ocean Stone Arch -> Invitation, Venue & Actions -->
+  <section class="story-section" id="scene-4">
+    <div class="glass-card">
+      <div class="telugu-shloka">॥ సర్వేజనాః సుఖినోభవంతు ॥</div>
+      <div class="section-eyebrow telugu-sub">వివాహ వేదిక &amp; ఆహ్వానం • WEDDING VENUE &amp; INVITATION</div>
+
+      <h2 class="venue-title">Suguna Gardens</h2>
+      <div style="font-family: var(--font-telugu); font-size: 1.1rem; color: var(--gold-primary); margin-top: -2px; margin-bottom: 4px; font-weight: 600;">(సుగుణ గార్డెన్స్)</div>
+
+      <p class="venue-address telugu-font">
+        సుగుణ గార్డెన్స్ కళ్యాణ వేదిక • Suguna Gardens Convention Grounds
+      </p>
+
+      <div class="ornament-divider">
+        <span></span>
+        <div class="ornament-icon">✦</div>
+        <span></span>
+      </div>
+
+      <div style="margin-bottom: 8px; padding: 6px 14px; background: rgba(30, 24, 18, 0.65); border: 1px solid var(--glass-border); border-radius: 12px;">
+        <div style="font-size: 0.68rem; letter-spacing: 1.5px; text-transform: uppercase; color: var(--gold-light);">వివాహ ఆహ్వానితులు • INVITED BY</div>
+        <div style="font-family: var(--font-royal); font-size: 1.05rem; color: #ffffff; margin-top: 2px; font-weight: 700;">KONIJARLA RAMAKRISHNA - KAVITHA</div>
+        <div style="font-size: 0.84rem; color: var(--gold-primary); font-family: var(--font-telugu);">కొణిజర్ల రామకృష్ణ - కవిత మరియు కుటుంబ సభ్యులు</div>
+      </div>
+
+      <p class="subtitle-prose telugu-font" style="font-size: 0.98rem; margin-bottom: 10px; color: #fffdf5; line-height: 1.4;">
+        మీరు మీ కుటుంబ సమేతంగా విచ్చేసి నూతన వధూవరులను నిండు మనస్సుతో ఆశీర్వదించ ప్రార్థన.
+      </p>
+
+      <!-- Action Buttons -->
+      <div class="action-buttons-wrap">
+        <a href="https://maps.app.goo.gl/YrLViTE3w3ge5gp89?g_st=ic" target="_blank" rel="noopener" class="cta-button cta-primary">
+          <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+          Get Directions
+        </a>
+
+        <button id="add-cal-btn" class="cta-button cta-secondary">
+          <svg viewBox="0 0 24 24"><path d="M19 4h-1V2h-2v2H8V2H6v2H5c-1.11 0-1.99.9-1.99 2L3 20c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 16H5V10h14v10zM9 14H7v-2h2v2zm4 0h-2v-2h2v2zm4 0h-2v-2h2v2zm-8 4H7v-2h2v2zm4 4h-2v-2h2v2zm4 0h-2v-2h2v2z"/></svg>
+          Add to Calendar
+        </button>
+
+        <button id="share-invite-btn" class="cta-button cta-secondary">
+          <svg viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92s2.92-1.31 2.92-2.92c0-1.61-1.31-2.92-2.92-2.92z"/></svg>
+          Share
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Toast Notification -->
+  <div id="toast-msg">Blessings received with gratitude!</div>
+
+  <!-- JavaScript Scrubbing Engine & Interactive Systems -->
+  <script>
+    (function() {
+      // DOM Elements
+      const video = document.getElementById('temple-video');
+      const progressBar = document.getElementById('progress-bar');
+      const timeDisplay = document.getElementById('time-display');
+      const autoplayBtn = document.getElementById('autoplay-btn');
+      const autoplayText = document.getElementById('autoplay-text');
+      const autoplayIcon = document.getElementById('autoplay-icon');
+      const toastMsg = document.getElementById('toast-msg');
+      const navDots = document.querySelectorAll('.nav-dot');
+
+      const scenes = [
+        document.getElementById('scene-0'),
+        document.getElementById('scene-1'),
+        document.getElementById('scene-2'),
+        document.getElementById('scene-3'),
+        document.getElementById('scene-4')
+      ];
+
+      // Video timeline parameters
+      let videoDuration = 39.2;
+      let targetTime = 0;
+      let currentTime = 0;
+      let isAutoPlaying = false;
+      let autoPlayRaf = null;
+
+      // Video metadata loading
+      video.addEventListener('loadedmetadata', () => {
+        if (video.duration && !isNaN(video.duration)) {
+          videoDuration = video.duration;
+        }
+        updateTimeDisplay(0);
+      });
+
+      // Ensure video is paused so scroll completely controls playback
+      video.pause();
+
+      // Mobile media unlock primer (iOS / Android require initial interaction)
+      let mediaPrimed = false;
+      function primeMedia() {
+        if (mediaPrimed) return;
+        mediaPrimed = true;
+        video.play().then(() => {
+          video.pause();
+        }).catch(() => {});
+      }
+      window.addEventListener('touchstart', primeMedia, { once: true, passive: true });
+      window.addEventListener('scroll', primeMedia, { once: true, passive: true });
+      window.addEventListener('click', primeMedia, { once: true, passive: true });
+
+      // Hardware seek synchronizer
+      let isSeeking = false;
+      video.addEventListener('seeking', () => { isSeeking = true; });
+      video.addEventListener('seeked', () => {
+        isSeeking = false;
+        const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+        const scrollProgress = maxScroll > 0 ? Math.min(Math.max(window.scrollY / maxScroll, 0), 1) : 0;
+        const curTarget = scrollProgress * videoDuration;
+        const diff = curTarget - video.currentTime;
+        if (Math.abs(diff) > 0.04 && !isAutoPlaying && video.readyState >= 1) {
+          const clamped = Math.max(0, Math.min(currentTime, Math.max(0, videoDuration - 0.06)));
+          if (video.fastSeek) {
+            video.fastSeek(clamped);
+          } else {
+            video.currentTime = clamped;
+          }
+        }
+      });
+
+      function updateTimeDisplay(time) {
+        const curMins = Math.floor(time / 60);
+        const curSecs = Math.floor(time % 60);
+        const totMins = Math.floor(videoDuration / 60);
+        const totSecs = Math.floor(videoDuration % 60);
+        const pad = n => (n < 10 ? '0' : '') + n;
+        timeDisplay.textContent = `${pad(curMins)}:${pad(curSecs)} / ${pad(totMins)}:${pad(totSecs)}`;
+      }
+
+      // Format scenes boundaries along scroll timeline (0 to 1)
+      const sceneRanges = [
+        { start: 0.00, end: 0.16 }, // Opening Gopuram
+        { start: 0.18, end: 0.38 }, // Doorway -> Couple reveal
+        { start: 0.40, end: 0.64 }, // Mandapa pillars -> Celebrations & Dinner
+        { start: 0.66, end: 0.84 }, // Corridor to light -> Muhurtham countdown
+        { start: 0.86, end: 1.00 }  // Ocean Arch -> Final Invitation & Venue
+      ];
+
+      // Smooth Inertia Scrubbing Loop via requestAnimationFrame
+      let lastAutoTimestamp = null;
+
+      function renderLoop(now) {
+        const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+
+        // Auto Tour smooth progression across total journey (~38 seconds)
+        if (isAutoPlaying && maxScroll > 0) {
+          if (!lastAutoTimestamp) lastAutoTimestamp = now;
+          const dt = (now - lastAutoTimestamp) / 1000;
+          lastAutoTimestamp = now;
+
+          const pixelsPerSec = maxScroll / 38;
+          const nextScroll = window.scrollY + pixelsPerSec * dt;
+
+          if (nextScroll >= maxScroll - 2) {
+            window.scrollTo(0, maxScroll);
+            toggleAutoplay(false);
+          } else {
+            window.scrollTo(0, nextScroll);
+          }
+        } else {
+          lastAutoTimestamp = null;
+        }
+
+        const scrollProgress = maxScroll > 0 ? Math.min(Math.max(window.scrollY / maxScroll, 0), 1) : 0;
+        targetTime = scrollProgress * videoDuration;
+
+        // Liquid Lerp interpolation: smooths out wheel steps & touch flickers
+        const delta = targetTime - currentTime;
+        currentTime += delta * 0.16;
+
+        if (Math.abs(delta) > 0.003) {
+          if (video.readyState >= 1 && !isSeeking) {
+            const clamped = Math.max(0, Math.min(currentTime, Math.max(0, videoDuration - 0.06)));
+            if (video.fastSeek) {
+              video.fastSeek(clamped);
+            } else {
+              video.currentTime = clamped;
+            }
+          }
+        }
+
+        // Update Progress Indicator
+        const displayProgress = (currentTime / videoDuration) * 100;
+        progressBar.style.width = displayProgress + '%';
+        updateTimeDisplay(currentTime);
+
+        // Update Scene Overlays based on current progress
+        updateScenes(scrollProgress);
+
+        requestAnimationFrame(renderLoop);
+      }
+      requestAnimationFrame(renderLoop);
+
+      function updateScenes(progress) {
+        let activeIndex = 0;
+
+        scenes.forEach((scene, index) => {
+          const range = sceneRanges[index];
+          if (progress >= range.start && progress <= range.end) {
+            scene.classList.add('active');
+            activeIndex = index;
+          } else {
+            scene.classList.remove('active');
+          }
+        });
+
+        // Fallback: If in transition gap, keep the nearest scene visible
+        const hasActive = scenes.some(s => s.classList.contains('active'));
+        if (!hasActive) {
+          if (progress < 0.18) { scenes[0].classList.add('active'); activeIndex = 0; }
+          else if (progress < 0.40) { scenes[1].classList.add('active'); activeIndex = 1; }
+          else if (progress < 0.66) { scenes[2].classList.add('active'); activeIndex = 2; }
+          else if (progress < 0.86) { scenes[3].classList.add('active'); activeIndex = 3; }
+          else { scenes[4].classList.add('active'); activeIndex = 4; }
+        }
+
+        // Update nav dots
+        navDots.forEach((dot, idx) => {
+          if (idx === activeIndex) {
+            dot.classList.add('active');
+          } else {
+            dot.classList.remove('active');
+          }
+        });
+      }
+
+      // Quick Nav Dots click
+      navDots.forEach((dot) => {
+        dot.addEventListener('click', () => {
+          const step = parseInt(dot.getAttribute('data-step'), 10);
+          const targetRange = sceneRanges[step];
+          const midProgress = (targetRange.start + targetRange.end) / 2;
+          const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+          window.scrollTo({
+            top: midProgress * maxScroll,
+            behavior: 'smooth'
+          });
+        });
+      });
+
+      // Autoplay / Auto-tour walkthrough
+      autoplayBtn.addEventListener('click', () => toggleAutoplay());
+
+      function toggleAutoplay(forceState) {
+        const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+
+        if (typeof forceState === 'boolean') {
+          isAutoPlaying = forceState;
+        } else {
+          isAutoPlaying = !isAutoPlaying;
+        }
+
+        if (isAutoPlaying) {
+          // If at or near bottom, restart from the top
+          if (window.scrollY >= maxScroll - 25) {
+            window.scrollTo(0, 0);
+            currentTime = 0;
+            targetTime = 0;
+            if (video.readyState >= 1) {
+              try { video.currentTime = 0; } catch(e) {}
+            }
+          }
+          autoplayBtn.style.background = 'rgba(242, 210, 131, 0.45)';
+          autoplayText.textContent = 'Pause Tour';
+          autoplayIcon.innerHTML = '<path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/>';
+          lastAutoTimestamp = performance.now();
+        } else {
+          autoplayBtn.style.background = '';
+          autoplayText.textContent = 'Auto Tour';
+          autoplayIcon.innerHTML = '<path d="M8 5v14l11-7z"/>';
+          lastAutoTimestamp = null;
+        }
+      }
+
+      // User manual scroll/drag pauses autoplay gently
+      window.addEventListener('wheel', (e) => {
+        if (isAutoPlaying && Math.abs(e.deltaY) > 12) {
+          toggleAutoplay(false);
+        }
+      }, { passive: true });
+
+      let touchStartY = 0;
+      window.addEventListener('touchstart', (e) => {
+        if (e.touches && e.touches.length) {
+          touchStartY = e.touches[0].clientY;
+        }
+      }, { passive: true });
+      window.addEventListener('touchmove', (e) => {
+        if (isAutoPlaying && e.touches && e.touches.length) {
+          if (Math.abs(e.touches[0].clientY - touchStartY) > 25) {
+            toggleAutoplay(false);
+          }
+        }
+      }, { passive: true });
+
+      // Live Wedding Countdown Timer (Nov 20, 2026, 08:56 PM IST)
+      const targetWeddingDate = new Date('2026-11-20T20:56:00+05:30').getTime();
+
+      function updateCountdown() {
+        const now = new Date().getTime();
+        const diff = targetWeddingDate - now;
+
+        if (diff > 0) {
+          const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+          const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+          const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+          const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+          document.getElementById('cd-days').textContent = (days < 10 ? '0' : '') + days;
+          document.getElementById('cd-hours').textContent = (hours < 10 ? '0' : '') + hours;
+          document.getElementById('cd-minutes').textContent = (minutes < 10 ? '0' : '') + minutes;
+          document.getElementById('cd-seconds').textContent = (seconds < 10 ? '0' : '') + seconds;
+        }
+      }
+      setInterval(updateCountdown, 1000);
+      updateCountdown();
+
+      // Ambient Temple Soundscape via Web Audio API - Default ON, continuous sacred drone & bells
+      let audioCtx = null;
+      let soundActive = false;
+      let droneNodes = [];
+
+      function initSacredAudio() {
+        if (soundActive) return;
+        try {
+          if (!audioCtx) {
+            audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+          }
+          if (audioCtx.state === 'suspended') {
+            audioCtx.resume();
+          }
+          soundActive = true;
+          startSacredAudio();
+        } catch(e) {}
+      }
+
+      // Start on page initialization
+      initSacredAudio();
+
+      // Browsers require a user gesture to unblock audio output:
+      ['click', 'touchstart', 'touchend', 'scroll', 'wheel', 'keydown'].forEach(evt => {
+        window.addEventListener(evt, () => {
+          if (!soundActive || (audioCtx && audioCtx.state === 'suspended')) {
+            initSacredAudio();
+          }
+        }, { passive: true });
+      });
+
+      function startSacredAudio() {
+        if (!audioCtx) return;
+
+        const masterGain = audioCtx.createGain();
+        masterGain.gain.setValueAtTime(0.32, audioCtx.currentTime);
+        masterGain.connect(audioCtx.destination);
+        droneNodes.push(masterGain);
+
+        // Tanpura Harmonics (D - 146.83Hz, A - 220Hz, D - 73.4Hz)
+        const freqs = [73.41, 146.83, 220.0, 293.66];
+        freqs.forEach((freq, idx) => {
+          const osc = audioCtx.createOscillator();
+          const gain = audioCtx.createGain();
+          const panner = audioCtx.createStereoPanner ? audioCtx.createStereoPanner() : null;
+
+          osc.type = idx % 2 === 0 ? 'sine' : 'triangle';
+          osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+          osc.detune.setValueAtTime((Math.random() - 0.5) * 8, audioCtx.currentTime);
+          gain.gain.setValueAtTime(0.08 / (idx + 1), audioCtx.currentTime);
+
+          if (panner) {
+            panner.pan.setValueAtTime((idx % 2 === 0 ? -0.4 : 0.4), audioCtx.currentTime);
+            osc.connect(gain);
+            gain.connect(panner);
+            panner.connect(masterGain);
+          } else {
+            osc.connect(gain);
+            gain.connect(masterGain);
+          }
+
+          osc.start();
+          droneNodes.push(osc, gain);
+        });
+
+        // Periodic Temple Bell chime
+        window.bellInterval = setInterval(() => {
+          if (!audioCtx) return;
+          playTempleBell(audioCtx, masterGain);
+        }, 5500);
+
+        playTempleBell(audioCtx, masterGain);
+      }
+
+      function playTempleBell(ctx, dest) {
+        const now = ctx.currentTime;
+        const partials = [587.33, 880, 1174.66, 1760];
+        partials.forEach((f, i) => {
+          const osc = ctx.createOscillator();
+          const gain = ctx.createGain();
+          osc.type = 'sine';
+          osc.frequency.setValueAtTime(f * (1 + (Math.random() - 0.5) * 0.005), now);
+          const initVol = 0.12 / (i + 1);
+          gain.gain.setValueAtTime(initVol, now);
+          gain.gain.exponentialRampToValueAtTime(0.0001, now + 3.5 + i * 0.5);
+          osc.connect(gain);
+          gain.connect(dest);
+          osc.start(now);
+          osc.stop(now + 4.5);
+        });
+      }
+
+      // Golden Dust Particle System on Canvas
+      const canvas = document.getElementById('particles-canvas');
+      const ctx = canvas.getContext('2d');
+      let particles = [];
+
+      function resizeCanvas() {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+      }
+      window.addEventListener('resize', resizeCanvas);
+      resizeCanvas();
+
+      class GoldenParticle {
+        constructor() {
+          this.reset();
+        }
+        reset() {
+          this.x = Math.random() * canvas.width;
+          this.y = Math.random() * canvas.height;
+          this.size = Math.random() * 2.2 + 0.8;
+          this.speedY = -(Math.random() * 0.35 + 0.12);
+          this.speedX = (Math.random() - 0.5) * 0.25;
+          this.opacity = Math.random() * 0.55 + 0.25;
+          this.fadeSpeed = Math.random() * 0.008 + 0.004;
+          this.growing = Math.random() > 0.5;
+        }
+        update() {
+          this.y += this.speedY;
+          this.x += this.speedX;
+
+          if (this.growing) {
+            this.opacity += this.fadeSpeed;
+            if (this.opacity >= 0.75) this.growing = false;
+          } else {
+            this.opacity -= this.fadeSpeed;
+            if (this.opacity <= 0.1) this.growing = true;
+          }
+
+          if (this.y < -10 || this.x < -10 || this.x > canvas.width + 10) {
+            this.reset();
+            this.y = canvas.height + 5;
+          }
+        }
+        draw() {
+          ctx.beginPath();
+          ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+          ctx.fillStyle = `rgba(242, 210, 131, ${this.opacity})`;
+          ctx.shadowBlur = 6;
+          ctx.shadowColor = 'rgba(242, 210, 131, 0.5)';
+          ctx.fill();
+        }
+      }
+
+      for (let i = 0; i < 40; i++) {
+        particles.push(new GoldenParticle());
+      }
+
+      function animateParticles() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        particles.forEach(p => {
+          p.update();
+          p.draw();
+        });
+        requestAnimationFrame(animateParticles);
+      }
+      animateParticles();
+
+      // Calendar .ics Generation
+      document.getElementById('add-cal-btn').addEventListener('click', () => {
+        const icsData = [
+          'BEGIN:VCALENDAR',
+          'VERSION:2.0',
+          'PRODID:-//Saketh & Yamini Wedding//EN',
+          'BEGIN:VEVENT',
+          'UID:wedding-saketh-yamini-2026@celebration',
+          'DTSTAMP:20261111T120000Z',
+          'DTSTART:20261120T140000Z',
+          'DTEND:20261120T190000Z',
+          'SUMMARY:Wedding of Jaganadha Saketh Guptha & Sai Likitha Yamini',
+          'DESCRIPTION:Wedding of Jaganadha Saketh Guptha (S/O Konijarla Ramakrishna - Kavitha) & Sai Likitha Yamini (D/O Pasumarthi Venkata Ramakrishna Rao - Mahalakshmi).\\n\\nOrder of Celebrations:\\n• Nov 18: Pellikoduku & Haldi\\n• Nov 20: Wedding Kalyanam (Dinner at 07:30 PM, Sumuhurtham at 08:56 PM - Uttharabadra Nakshatram Midhuna Lagnam)\\n• Nov 21: Satya Narayana Swami Vratham\\n\\nVenue: Suguna Gardens\\nLocation: https://maps.app.goo.gl/YrLViTE3w3ge5gp89?g_st=ic',
+          'LOCATION:Suguna Gardens (https://maps.app.goo.gl/YrLViTE3w3ge5gp89?g_st=ic)',
+          'STATUS:CONFIRMED',
+          'END:VEVENT',
+          'END:VCALENDAR'
+        ].join('\r\n');
+
+        const blob = new Blob([icsData], { type: 'text/calendar;charset=utf-8' });
+        const link = document.createElement('a');
+        link.href = window.URL.createObjectURL(blob);
+        link.setAttribute('download', 'Saketh_Yamini_Wedding.ics');
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        showToast('Wedding calendar invite downloaded!');
+      });
+
+      // Native Web Share API
+      document.getElementById('share-invite-btn').addEventListener('click', async () => {
+        if (navigator.share) {
+          try {
+            await navigator.share({
+              title: 'Saketh & Yamini Wedding Invitation',
+              text: 'Wedding Celebrations of Jaganadha Saketh Guptha & Sai Likitha Yamini:\\n• Nov 18: Pellikoduku & Haldi\\n• Nov 20: Wedding (Dinner: 07:30 PM | Sumuhurtham: 08:56 PM)\\n• Nov 21: Satya Narayana Swami Vratham\\n\\nVenue: Suguna Gardens\\nDirections: https://maps.app.goo.gl/YrLViTE3w3ge5gp89?g_st=ic',
+              url: window.location.href
+            });
+          } catch(e) {}
+        } else {
+          navigator.clipboard.writeText(window.location.href);
+          showToast('Invitation link copied to clipboard!');
+        }
+      });
+
+      // Toast Notification Helper
+      function showToast(text) {
+        toastMsg.textContent = text;
+        toastMsg.classList.add('show');
+        setTimeout(() => {
+          toastMsg.classList.remove('show');
+        }, 3200);
+      }
+
+    })();
+  </script>
+</body>
+</html>
